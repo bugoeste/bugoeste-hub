@@ -59,6 +59,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
           fingerprint: ${{ secrets.HOST_SSH_FINGERPRINT }}
+          debug: true
           script: |
             cd ${{ secrets.BUGOESTE_HUB_COMPOSE_LOCATION }}
             docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.CR_PAT }}
