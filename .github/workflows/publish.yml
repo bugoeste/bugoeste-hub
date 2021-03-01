@@ -59,10 +59,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
           fingerprint: ${{ secrets.HOST_SSH_FINGERPRINT }}
-          debug: true
           script: |
-            which docker-compose
-            which docker
             cd ${{ secrets.BUGOESTE_HUB_COMPOSE_LOCATION }}
             echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
-            docker-compose restart
+            ${{ secrets.DOCKER_COMPOSE_BIN }} restart
