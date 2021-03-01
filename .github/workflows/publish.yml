@@ -62,4 +62,6 @@ jobs:
           script: |
             cd ${{ secrets.BUGOESTE_HUB_COMPOSE_LOCATION }}
             echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
-            ${{ secrets.DOCKER_COMPOSE_BIN }} restart
+            ${{ secrets.DOCKER_COMPOSE_BIN }} pull
+            ${{ secrets.DOCKER_COMPOSE_BIN }} down
+            ${{ secrets.DOCKER_COMPOSE_BIN }} up
