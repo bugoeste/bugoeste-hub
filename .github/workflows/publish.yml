@@ -39,8 +39,14 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
 
+      - name: Restore docker layer cache
+        uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+
       - name: Build Image
         run: docker build -t bugoeste-hub .
 
       - name: Push image
-        run: docker image push 'ghcr.io/${{ github.repository_owner }}/bugoeste-hub:latest'
+        run: |
+          docker image tag bugoeste-hub ghcr.io/${{ github.repository_owner }}/bugoeste-hub
+          docker image push 'ghcr.io/${{ github.repository_owner }}/bugoeste-hub:latest'
