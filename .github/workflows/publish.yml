@@ -50,3 +50,16 @@ jobs:
         run: |
           docker image tag bugoeste-hub ghcr.io/${{ github.repository_owner }}/bugoeste-hub
           docker image push 'ghcr.io/${{ github.repository_owner }}/bugoeste-hub:latest'
+
+      - name: Deploy image to server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          passphrase: ${{ secrets.SSH_PRIVATE_KEY_PASSPHRASE }}
+          fingerprint: ${{ secrets.HOST_SSH_FINGERPRINT }}
+          script: |
+            cd ${{ secrets.BUGOESTE_HUB_COMPOSE_LOCATION }}
+            docker login ghcr.io -u ${{ github.repository_owner }} -p ${{ secrets.CR_PAT }}
+            docker compose restart
