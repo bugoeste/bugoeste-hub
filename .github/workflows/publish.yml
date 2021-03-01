@@ -61,6 +61,7 @@ jobs:
           fingerprint: ${{ secrets.HOST_SSH_FINGERPRINT }}
           debug: true
           script: |
+            whoami
             cd ${{ secrets.BUGOESTE_HUB_COMPOSE_LOCATION }}
             echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u ${{ github.repository_owner }} --password-stdin
             docker-compose restart
