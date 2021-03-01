@@ -2,8 +2,6 @@ name: CI
 
 # Controls when the action will run.
 on:
-  push:
-    branches: [master]
   pull_request:
     branches: [master]
   workflow_dispatch:
@@ -15,12 +13,12 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      
+
       - name: Setup NodeJS environment
         uses: actions/setup-node@v2.1.5
         with:
           node-version: '>=15.8.0'
-          
+
       - name: Restore cached node_modules
         uses: actions/cache@v2
         with:
