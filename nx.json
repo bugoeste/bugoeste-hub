@@ -18,7 +18,10 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint"
+        ]
       }
     }
   },
@@ -26,9 +29,8 @@
     "bugoeste-hub": {
       "tags": []
     },
-    "bugoeste-hub-e2e": {
-      "tags": [],
-      "implicitDependencies": ["bugoeste-hub"]
+    "api": {
+      "tags": []
     }
   }
 }

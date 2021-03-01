@@ -28,7 +28,9 @@
       "targets": {
         "build": {
           "executor": "@nrwl/web:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/apps/bugoeste-hub",
             "index": "apps/bugoeste-hub/src/index.html",
@@ -82,12 +84,16 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/bugoeste-hub/**/*.{ts,tsx,js,jsx}"]
+            "lintFilePatterns": [
+              "apps/bugoeste-hub/**/*.{ts,tsx,js,jsx}"
+            ]
           }
         },
         "test": {
           "executor": "@nrwl/jest:jest",
-          "outputs": ["coverage/apps/bugoeste-hub"],
+          "outputs": [
+            "coverage/apps/bugoeste-hub"
+          ],
           "options": {
             "jestConfig": "apps/bugoeste-hub/jest.config.js",
             "passWithNoTests": true
@@ -95,28 +101,61 @@
         }
       }
     },
-    "bugoeste-hub-e2e": {
-      "root": "apps/bugoeste-hub-e2e",
-      "sourceRoot": "apps/bugoeste-hub-e2e/src",
+    "api": {
+      "root": "apps/api",
+      "sourceRoot": "apps/api/src",
       "projectType": "application",
+      "prefix": "api",
       "targets": {
-        "e2e": {
-          "executor": "@nrwl/cypress:cypress",
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
-            "cypressConfig": "apps/bugoeste-hub-e2e/cypress.json",
-            "tsConfig": "apps/bugoeste-hub-e2e/tsconfig.e2e.json",
-            "devServerTarget": "bugoeste-hub:serve"
+            "outputPath": "dist/apps/api",
+            "main": "apps/api/src/main.ts",
+            "tsConfig": "apps/api/tsconfig.app.json",
+            "assets": [
+              "apps/api/src/assets"
+            ]
           },
           "configurations": {
             "production": {
-              "devServerTarget": "bugoeste-hub:serve:production"
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/api/src/environments/environment.ts",
+                  "with": "apps/api/src/environments/environment.prod.ts"
+                }
+              ]
             }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "api:build"
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["apps/bugoeste-hub-e2e/**/*.{js,ts}"]
+            "lintFilePatterns": [
+              "apps/api/**/*.ts"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": [
+            "coverage/apps/api"
+          ],
+          "options": {
+            "jestConfig": "apps/api/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }
