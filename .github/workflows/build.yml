@@ -13,18 +13,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2.1.5
+      
+      - name: Setup NodeJS environment
+        uses: actions/setup-node@v2.1.5
         with:
           node-version: '>=15.8.0'
-      - uses: actions/cache@v2
+          
+      - name: Restore cached node_modules
+        uses: actions/cache@v2
         with:
-          path: ~/.npm
+          path: '**/node_modules'
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: ${{ runner.os }}-node-
 
-      - name: npm install
+      - name: Install node packages
         run: npm install
 
-      - name: nx build
+      - name: Build application
         run: npm run nx build
