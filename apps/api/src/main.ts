@@ -11,7 +11,9 @@ async function start() {
   const port = process.env.port || 3333;
   const server = app.listen(port);
 
-  server.on('listening', () => `Listening at http://localhost:${port}/api`);
+  server.on('listening', () =>
+    console.log(`Listening at http://localhost:${port}/api`)
+  );
 }
 
 start();
